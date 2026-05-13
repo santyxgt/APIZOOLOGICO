@@ -1,24 +1,23 @@
 require("dotenv").config();
 const express = require("express");
 const mongoose = require("mongoose");
-const authRouthes = require("./routes/authentication")
+const authRouthes = require("./routes/authentication");
 const cors = require("cors");
 
 const app = express();
 
 // Middleware
-app.use(cors());          // Permitir solicitudes CORS
-app.use(express.json());  // Permitir recibir datos JSON en el cuerpo de la solicitud
+app.use(cors()); // Permitir solicitudes CORS
+app.use(express.json()); // Permitir recibir datos JSON en el cuerpo de la solicitud
 
 // Conectar a MongoDB
-mongoose.connect(process.env.MONGO_URI)
+mongoose
+  .connect(process.env.MONGO_URI)
   .then(() => console.log("MongoDB conectado"))
-  .catch(err => console.error(err));
-
-
+  .catch((err) => console.error(err));
 
 // Rutas
-app.use("/api/animals", require("./routes/animalRoutes"));
+app.use("/api/animals", require("./routes/animalRoutes")); //*importante
 app.use("/api", authRouthes);
 // Ruta base
 app.get("/", (req, res) => {
